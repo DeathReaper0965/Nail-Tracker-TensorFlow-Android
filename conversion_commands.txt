@@ -1,0 +1,29 @@
+## This command generates the TFLITE SSD Graph which can be later used to convert it to TFLITE File
+
+python models/research/object_detection/export_tflite_ssd_graph.py 
+	--pipeline_config_path nailtracking/model/export_model_008/pipeline.config 
+	--trained_checkpoint_prefix  nailtracking/model/export_model_008/model.ckpt 
+	--output_directory export/converted_nail_track 
+	--add_postprocessing_op=true
+
+## This command generates the TFLITE file compatible with Android
+
+tflite_convert --output_file=converted_nail_track_new.tflite 
+	       --graph_def_file=export/converted_nail_track/tflite_graph.pb 
+	       --input_arrays=normalized_input_image_tensor 
+	       --output_arrays=TFLite_Detection_PostProcess,TFLite_Detection_PostProcess:1,TFLite_Detection_PostProcess:2,TFLite_Detection_PostProcess:3 
+	       --input_shapes=1,640,640,3 
+               --inference_input_type=FLOAT 
+               --std_dev=128 
+               --mean=128 
+               --allow_custom_ops 
+               --target_ops=TFLITE_BUILTINS,SELECT_TF_OPS
+
+## This command is used to generate the inference frozen graph which can be directly used with tensorflow object detection
+
+python models/research/object_detection/export_inference_graph.py 
+	--input_type image_tensor 
+	--pipeline_config_path=nailtracking/model/export_model_008/pipeline.config 
+	--trained_checkpoint_prefix  nailtracking/model/export_model_008/model.ckpt 
+	--output_directory export/converted_nail_track
+
