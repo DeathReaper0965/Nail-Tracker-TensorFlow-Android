@@ -5,3 +5,6 @@ Transfer Learned the feature layers of `ResNet Model` on Nail Images collected o
 The below GIF clearly shows how well the model is able to predict nails.
 
 ![](https://github.com/DeathReaper0965/Nail-Tracker-TensorFlow-Android/blob/master/data/nail-tracker.gif)
+
+
+Made with ❤️  by Praneet Pabolu
